@@ -1,15 +1,17 @@
-defmodule Wabanex.Training do
+defmodule Wabanex.Trainings do
   use Ecto.Schema
   import Ecto.Changeset
 
   alias Wabanex.{Exercise, User}
 
   @primary_key { :id, :binary_id, autogenerate: true }
-  @fields []
+  @foreign_key_type :binary_id
+
+  @fields [:start_date, :end_date,:user_id]
 
   schema "trainings" do
     field :start_date, :date
-    field :end_data, :date
+    field :end_date, :date
 
     belongs_to :user, User
     has_many :exercises, Exercise
@@ -21,9 +23,6 @@ defmodule Wabanex.Training do
       %__MODULE__{}
       |> cast(params, @fields)
       |> validate_required(@fields)
-      |> validate_length(:password, min: 6)
-      |> validate_length(:name, min: 2)
-      |> validate_format(:email, ~r/@/)
-      |> unique_constraint([:email])
+      |> cast_assoc(:exercises)
   end
 end

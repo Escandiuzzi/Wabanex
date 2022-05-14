@@ -2,28 +2,25 @@ defmodule Wabanex.Exercise do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Wabanex.{Exercise, User}
+  alias Wabanex.Trainings
 
   @primary_key { :id, :binary_id, autogenerate: true }
-  @fields []
+  @fields [ :name, :protocol_description, :repetitions, :youtube_video_url ]
 
-  schema "trainings" do
-    field :start_date, :date
-    field :end_data, :date
+  schema "exercises" do
+    field :name, :string
+    field :protocol_description, :string
+    field :repetitions, :string
+    field :youtube_video_url, :string
 
-    belongs_to :user, User
-    has_many :exervices, Exercise
+    belongs_to :training, Trainings
 
     timestamps()
   end
 
-  def changeset(params) do
-      %__MODULE__{}
+  def changeset(exercise, params) do
+      exercise
       |> cast(params, @fields)
       |> validate_required(@fields)
-      |> validate_length(:password, min: 6)
-      |> validate_length(:name, min: 2)
-      |> validate_format(:email, ~r/@/)
-      |> unique_constraint([:email])
   end
 end
