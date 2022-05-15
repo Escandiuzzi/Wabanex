@@ -4,7 +4,7 @@ defmodule Wabanex.Repo.Migrations.CreateTrainingsTable do
   def change do
     create table(:trainings) do
       add :start_date, :date
-      add :end_data, :date
+      add :end_date, :date
       add :user_id, references(:users)
 
       timestamps()
